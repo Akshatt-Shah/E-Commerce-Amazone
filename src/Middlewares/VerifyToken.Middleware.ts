@@ -7,8 +7,8 @@ config();
 const secretkey = process.env.SECRET_KEY || "AkshatShah";
 
 export interface newrequest extends Request {
-  userId?: String;
-  sellerId?: String;
+  userId?: string;
+  sellerId?: string;
 }
 export class VerifyToken {
   async verifyTokenForAdmin(req: Request, res: Response, next: NextFunction) {
@@ -71,7 +71,7 @@ export class VerifyToken {
         next();
       } else {
         res.status(400).json({
-          message: "Only User Can Place the Order......",
+          message: "Only Seller Can Add the Store......",
           status: false,
         });
       }

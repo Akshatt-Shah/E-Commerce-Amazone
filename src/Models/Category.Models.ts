@@ -4,10 +4,18 @@ import { ICategory } from "../Interfaces";
 const CategorySchema: Schema = new Schema({
   name: {
     type: String,
-    enum: {
-      values: ["Fridge", "Mobile", "Mixer", "Washing-Machine", "TV", "AC"],
-      message: "{VALUE} Is NotA  Valid Category",
-    },
+    // enum: {
+    //   values: [
+    //     "Fridge",
+    //     "Mobile",
+    //     "Mixer",
+    //     "Washing-Machine",
+    //     "TV",
+    //     "AC",
+    //     "Laptop",
+    //   ],
+    //   message: "{VALUE} Is NotA  Valid Category",
+    // },
     required: true,
     unique: true,
   },
