@@ -1,5 +1,5 @@
 import { IUser } from "../Interfaces";
-import { users } from "../Models";
+import { carts, users } from "../Models";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { config } from "dotenv";
@@ -9,6 +9,10 @@ export class UserServices {
   async CreateUser(data: IUser) {
     try {
       const userdata = await users.create(data);
+      if (userdata !== null) {
+        const cart = await carts.create({ user_id: userdata._id });
+        console.log(cart)
+      }
       return { Data: userdata, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };

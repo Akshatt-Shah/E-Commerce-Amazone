@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { config } from "dotenv";
 import Jwt from "jsonwebtoken";
 import { newrequest } from "../Middlewares/VerifyToken.Middleware";
+import { carts } from "../Models";
 config();
 const secretkey = process.env.SECRET_KEY || "AkshatShah";
 const user = new UserServices();
@@ -12,10 +13,9 @@ const user = new UserServices();
 export class UserControllers {
   async CreateUser(req: Request, res: Response) {
     try {
-      console.log("first");
       let data: IUser = req.body;
       data.password = await bcrypt.hash(data.password, 10);
-      const userdata = await user.CreateUser(data);
+      const userdata: any = await user.CreateUser(data);
       res.status(200).json(userdata);
     } catch (error: any) {
       res.status(400).json(error.message);
