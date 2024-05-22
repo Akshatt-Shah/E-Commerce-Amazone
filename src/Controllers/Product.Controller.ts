@@ -28,7 +28,8 @@ export class ProductController {
       const sellerid = req.sellerId;
       console.log(sellerid);
       const { storeid } = req.params;
-      const productdata = await ProductService.GetAllProduct();
+      const  SearchTerm:any  = req.query;
+      const productdata = await ProductService.GetAllProduct(SearchTerm);
       res.status(200).json(productdata);
     } catch (error: any) {}
   }
@@ -38,15 +39,19 @@ export class ProductController {
       const sellerid = req.sellerId;
       console.log(sellerid);
       const data: IProduct = req.body;
-      const productdata = await ProductService.UpdateProduct(pid,sellerid, data);
+      const productdata = await ProductService.UpdateProduct(
+        pid,
+        sellerid,
+        data
+      );
       res.status(200).json(productdata);
     } catch (error: any) {}
   }
   async DeleteProduct(req: newrequest, res: Response) {
     try {
       const { pid } = req.params;
-    //   const sellerid = req.sellerId;
-    //   console.log(sellerid);
+      //   const sellerid = req.sellerId;
+      //   console.log(sellerid);
       const data: IProduct = req.body;
       const productdata = await ProductService.DeleteProduct(pid);
       res.status(200).json(productdata);

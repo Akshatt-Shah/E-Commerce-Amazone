@@ -38,8 +38,8 @@ export class CartController {
   async DeleteCartProduct(req: newrequest, res: Response) {
     try {
       const userId = req.userId;
-      const { pid} = req.params;
-      const data = await CartService.DeleteCartProduct({userId,pid});
+      const { pid } = req.params;
+      const data = await CartService.DeleteCartProduct({ userId, pid });
       res.status(200).json(data);
     } catch (error: any) {
       res.status(400).json({ message: error.message, status: false });
