@@ -4,8 +4,47 @@ import { ICart, ICartProducts } from "../Interfaces";
 export class CartServices {
   async GetCart(userId: any) {
     try {
+      let total:any=0
       const data = await carts.find({ user_id: userId });
-      return { Data: data, status: true };
+      const product = await cartproducts.aggregate([
+        {
+          $match: {
+            cart_id: data[0]._id,
+          },
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "product_id",
+            foreignField: "_id",
+            as: "ProductInfo",
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "ProductInfo.category_id",
+            foreignField: "_id",
+            as: "CategoryInfo",
+          },
+        },
+        {
+          $project: {
+            cart_id: 1,
+            productname: { $first: ["$ProductInfo.name"] },
+            productprice: { $first: ["$ProductInfo.price"] },
+            product_qty: 1,
+            productTotal: {
+              $multiply: ["$product_qty", { $first: ["$ProductInfo.price"] }],
+            },
+            categoryName: { $first: ["$CategoryInfo.name"] },
+          },
+        },
+      ]);
+      for(const ele of product){
+        total = total + ele.productTotal
+      }
+      return { Data: product,TotalorderValue:total, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }

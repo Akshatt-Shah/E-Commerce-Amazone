@@ -1,5 +1,6 @@
 import { IProduct } from "../Interfaces";
 import { products, stores, users } from "../Models";
+import { DynamicQuery } from "../utills/DynamicQueryBuilders";
 
 export class ProductServices {
   async CreateProduct(sellerid: any, data: IProduct) {
@@ -77,8 +78,10 @@ export class ProductServices {
       return { message: error.message, status: false };
     }
   }
-  async GetAllProduct() {
+  async GetAllProduct(SearchTerm?: any) {
     try {
+      const Dynamic = DynamicQuery(SearchTerm);
+
       const data = await products.aggregate([
         {
           $lookup: {
@@ -95,6 +98,12 @@ export class ProductServices {
             foreignField: "_id",
             as: "StoreInfo",
           },
+        },
+        {
+          $match: Dynamic.MatchObjects,
+        },
+        {
+          $sort:Dynamic.sort
         },
         {
           $project: {
