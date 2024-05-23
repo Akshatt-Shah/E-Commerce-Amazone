@@ -28,7 +28,7 @@ export class ProductController {
       const sellerid = req.sellerId;
       console.log(sellerid);
       const { storeid } = req.params;
-      const  SearchTerm:any  = req.query;
+      const SearchTerm: any = req.query;
       const productdata = await ProductService.GetAllProduct(SearchTerm);
       res.status(200).json(productdata);
     } catch (error: any) {}
