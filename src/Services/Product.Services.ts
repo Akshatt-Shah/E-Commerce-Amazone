@@ -103,16 +103,40 @@ export class ProductServices {
           $match: Dynamic.MatchObjects,
         },
         {
-          $sort:Dynamic.sort
+          $sort: Dynamic.sort,
+        },
+        // {
+        //   $addFields: {
+        //     Availability: {
+        //       $cond: {
+        //         if: { status: true },
+        //         then: "Product Available",
+        //         else: "Product Not Available",
+        //       },
+        //     },
+        //   },
+        // },
+        {
+          $addFields: {
+            Availibility: {
+              $cond: {
+                if: { $eq: ["$status", true] },
+                then: "Product Available",
+                else: "Product Not Available",
+              },
+            },
+          },
         },
         {
           $project: {
+            status: 1,
             name: 1,
             price: 1,
             description: 1,
             stock: 1,
             Category_name: { $first: ["$CatagoryInfo.name"] },
             Store_name: { $first: ["$StoreInfo.store_name"] },
+            Availibility:1
           },
         },
       ]);
