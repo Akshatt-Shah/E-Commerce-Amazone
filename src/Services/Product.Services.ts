@@ -1,7 +1,7 @@
 import { IProduct } from "../Interfaces";
 import { products, stores, users } from "../Models";
 import { DynamicQuery } from "../utills/DynamicQueryBuilders";
-
+import { msg } from "../utills";
 export class ProductServices {
   async CreateProduct(sellerid: any, data: IProduct) {
     try {
@@ -14,7 +14,7 @@ export class ProductServices {
         const productdata = await products.create(data);
         return {
           data: productdata,
-          message: "Product Is Created",
+          message: msg.createdata("Product"),
           status: true,
         };
       } else {
@@ -35,7 +35,7 @@ export class ProductServices {
         const productdata = await products.find({ store_id: storeid });
         return {
           data: productdata,
-          message: "Product Is Created",
+          message: msg.Selectdata("Product"),
           status: true,
         };
       } else {
@@ -56,7 +56,7 @@ export class ProductServices {
         const productdata = await products.findByIdAndUpdate(pid, data);
         return {
           data: productdata,
-          message: "Product Is Updated",
+          message: msg.Updatedata("Product"),
           status: true,
         };
       } else {
@@ -71,7 +71,7 @@ export class ProductServices {
       const productdata = await products.findByIdAndDelete(pid);
       return {
         data: productdata,
-        message: "Product Is Updated",
+        message: msg.Deletedata("Product"),
         status: true,
       };
     } catch (error: any) {
@@ -136,7 +136,7 @@ export class ProductServices {
             stock: 1,
             Category_name: { $first: ["$CatagoryInfo.name"] },
             Store_name: { $first: ["$StoreInfo.store_name"] },
-            Availibility:1
+            Availibility: 1,
           },
         },
       ]);

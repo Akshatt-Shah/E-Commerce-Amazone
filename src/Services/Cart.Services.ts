@@ -4,7 +4,7 @@ import { ICart, ICartProducts } from "../Interfaces";
 export class CartServices {
   async GetCart(userId: any) {
     try {
-      let total:any=0
+      let total: any = 0;
       const data = await carts.find({ user_id: userId });
       const product = await cartproducts.aggregate([
         {
@@ -41,10 +41,10 @@ export class CartServices {
           },
         },
       ]);
-      for(const ele of product){
-        total = total + ele.productTotal
+      for (const ele of product) {
+        total = total + ele.productTotal;
       }
-      return { Data: product,TotalorderValue:total, status: true };
+      return { Data: product, TotalorderValue: total, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }
@@ -85,7 +85,6 @@ export class CartServices {
       } else {
         return { message: "User Is Not A valid", status: false };
       }
-      return { Data: data, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }

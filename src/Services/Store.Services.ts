@@ -1,6 +1,6 @@
 import { IStore } from "../Interfaces";
 import { stores } from "../Models";
-
+import { msg } from "../utills";
 export class StoreServices {
   async CreateStore(data: IStore) {
     try {
@@ -8,7 +8,7 @@ export class StoreServices {
       const storedata = await stores.create(data);
       return {
         Data: storedata,
-        message: "Store Created Successfully",
+        message: msg.createdata("Store"),
         status: true,
       };
     } catch (error: any) {
@@ -21,7 +21,7 @@ export class StoreServices {
       const storedata = await stores.find({ seller_id: sellerid });
       return {
         Data: storedata,
-        message: "Store Retrieved Successfully",
+        message: msg.Selectdata("Store"),
         status: true,
       };
     } catch (error: any) {
@@ -34,7 +34,7 @@ export class StoreServices {
       const storedata = await stores.find();
       return {
         Data: storedata,
-        message: "Store Retrieved Successfully",
+        message: msg.Selectdata("Store"),
         status: true,
       };
     } catch (error: any) {
@@ -53,7 +53,7 @@ export class StoreServices {
         const storedata = await stores.findByIdAndUpdate(id, data);
         return {
           Data: storedata,
-          message: "Store Updated Successfully",
+          message: msg.Updatedata("Store"),
           status: true,
         };
       } else {
@@ -78,7 +78,7 @@ export class StoreServices {
         });
         return {
           Data: storedata,
-          message: "Store Deleted Successfully",
+          message: msg.Deletedata("Store"),
           status: true,
         };
       } else {
@@ -95,7 +95,7 @@ export class StoreServices {
       const storedata = await stores.findByIdAndDelete(storeid);
       return {
         Data: storedata,
-        message: "Store Deleted Successfully",
+        message: msg.Deletedata("Store"),
         status: true,
       };
     } catch (error: any) {

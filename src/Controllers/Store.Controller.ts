@@ -2,6 +2,7 @@ import express, { Request, Response, json } from "express";
 import { IStore } from "../Interfaces";
 import { StoreServices } from "../Services";
 import { newrequest } from "../Middlewares/VerifyToken.Middleware";
+
 const StoreService = new StoreServices();
 
 export class StoreControllers {

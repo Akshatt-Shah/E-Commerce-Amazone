@@ -3,8 +3,16 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import express from "express";
 import { Route } from "./src/Routes";
+import fs from "fs";
+import path from "path";
+import morgan = require("morgan");
 config();
 const app = express();
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/", Route);
