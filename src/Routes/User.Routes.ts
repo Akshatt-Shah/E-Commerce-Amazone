@@ -15,9 +15,13 @@ URoute.post(
   usercontroller.CreateUser
 );
 
-URoute.get("/user/getalluser", usercontroller.GetAllUser);
+URoute.get(
+  "/user/getalluser",
+  Verify.verifyTokenForAdmin,
+  usercontroller.GetAllUser
+);
 
-URoute.get("/user/getuser/:id", usercontroller.GetUser);
+URoute.get("/user/getuser", Verify.verifyToken, usercontroller.GetUser);
 
 URoute.put(
   "/user/updateuser",

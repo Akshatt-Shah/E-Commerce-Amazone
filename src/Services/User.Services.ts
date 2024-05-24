@@ -3,6 +3,8 @@ import { carts, users } from "../Models";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import { Messaages } from "../utills/Messages.utills";
+const msg = new Messaages();
 config();
 const secretkey = process.env.SECRET_KEY || "AkshatShah";
 export class UserServices {
@@ -11,7 +13,7 @@ export class UserServices {
       const userdata = await users.create(data);
       if (userdata !== null) {
         const cart = await carts.create({ user_id: userdata._id });
-        console.log(cart)
+        console.log(cart);
       }
       return { Data: userdata, status: true };
     } catch (error: any) {
@@ -27,7 +29,7 @@ export class UserServices {
       if (userdata) {
         return { Data: userdata, status: true };
       } else {
-        return { Message: "User Is Not Available", status: true };
+        return { Message: msg.NotFounddata("User"), status: true };
       }
     } catch (error: any) {
       return { message: error.message, status: false };
@@ -42,7 +44,7 @@ export class UserServices {
       if (userdata) {
         return { Data: userdata, status: true };
       } else {
-        return { Message: "User Is Not Available", status: true };
+        return { Message: msg.NotFounddata("User"), status: true };
       }
     } catch (error: any) {
       return { message: error.message, status: false };
@@ -55,7 +57,7 @@ export class UserServices {
       if (userdata) {
         return { Data: userdata, status: true };
       } else {
-        return { Message: "User Is Not Available", status: true };
+        return { Message: msg.NotFounddata("User"), status: true };
       }
     } catch (error: any) {
       return { message: error.message, status: false };
@@ -67,7 +69,7 @@ export class UserServices {
       if (userdata) {
         return { Data: userdata, status: true };
       } else {
-        return { Message: "User Is Not Available", status: true };
+        return { Message: msg.NotFounddata("User"), status: true };
       }
     } catch (error: any) {
       return { message: error.message, status: false };
@@ -98,7 +100,7 @@ export class UserServices {
           };
         }
       } else {
-        return { Message: "User Is Not Available", status: true };
+        return { Message: msg.NotFounddata("User"), status: true };
       }
     } catch (error: any) {
       return { message: error.message, status: false };

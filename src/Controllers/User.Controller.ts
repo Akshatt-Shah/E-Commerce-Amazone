@@ -6,6 +6,7 @@ import { config } from "dotenv";
 import Jwt from "jsonwebtoken";
 import { newrequest } from "../Middlewares/VerifyToken.Middleware";
 import { carts } from "../Models";
+import { msg } from "../utills";
 config();
 const secretkey = process.env.SECRET_KEY || "AkshatShah";
 const user = new UserServices();
@@ -29,9 +30,9 @@ export class UserControllers {
       res.status(400).json(error.message);
     }
   }
-  async GetUser(req: Request, res: Response) {
+  async GetUser(req: newrequest, res: Response) {
     try {
-      const { id } = req.params;
+      const id: any = req.userId;
       const userdata = await user.GetUser(id);
       res.status(200).json(userdata);
     } catch (error: any) {
@@ -44,9 +45,7 @@ export class UserControllers {
       let data = req.body;
       data.password = await bcrypt.hash(data.password, 10);
       const userdata = await user.UpdateUser(id, data);
-      res
-        .status(200)
-        .json({ message: "User Updated Successfully", status: true });
+      res.status(200).json({ message: msg.Updatedata("user"), status: true });
     } catch (error: any) {
       res.status(400).json(error.message);
     }
@@ -60,9 +59,7 @@ export class UserControllers {
         const userId: any = req.userId;
         const userdata = await user.DeleteUser(userId);
       }
-      res
-        .status(200)
-        .json({ message: "User Deleted Successfully", status: true });
+      res.status(200).json({ message: msg.Deletedata("User"), status: true });
     } catch (error: any) {
       res.status(400).json(error.message);
     }

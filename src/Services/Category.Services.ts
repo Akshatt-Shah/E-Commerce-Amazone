@@ -1,11 +1,11 @@
 import { ICategory } from "../Interfaces";
 import { categories } from "../Models";
-
+import { msg } from "../utills";
 export class CategoryServices {
   async Createcategory(data: ICategory) {
     try {
       const Cdata = await categories.create(data);
-      return { message: "Category Created", Data: Cdata, status: true };
+      return { message: msg.createdata("Category"), Data: Cdata, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }
@@ -19,18 +19,18 @@ export class CategoryServices {
       return { message: error.message, status: false };
     }
   }
-  async Updatecategory(id:any,data:ICategory) {
+  async Updatecategory(id: any, data: ICategory) {
     try {
-      const Cdata = await categories.findByIdAndUpdate(id,data);
-      return { message: "Category Updated",Data: Cdata, status: true };
+      const Cdata = await categories.findByIdAndUpdate(id, data);
+      return { message: msg.Updatedata("Category"), Data: Cdata, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }
   }
-  async Deletecategory(id:any) {
+  async Deletecategory(id: any) {
     try {
       const Cdata = await categories.findByIdAndDelete(id);
-      return { message: "Category Deleted",Data: Cdata, status: true };
+      return { message: msg.Deletedata("Category"), Data: Cdata, status: true };
     } catch (error: any) {
       return { message: error.message, status: false };
     }
